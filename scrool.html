@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PG Dissertation Management System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        
+        .slider-container {
+            width: 95%;
+            overflow: hidden;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: rgb(71, 57, 57);
+            padding: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 5px;
+            width: max-content;
+        }
+        
+        .work {
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            width: 278px;
+            box-shadow: 0 0 20px 2px rgba(0,0,0,0.1);
+        }
+        
+        .work img {
+            width: 100%;
+            height: 310px;
+            display: block;
+            border-radius: 10px;
+            transition: transform 0.5s;
+        }
+        
+        .project {
+            width: 100%;
+            height: 0;
+            background: linear-gradient(rgba(107, 143, 233, 0.5), rgba(213, 43, 43, 0.95), #043301);
+            border-radius: 10px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: flex;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            font-size: 14px;
+            transition: height 0.5s;
+        }
+        .work:hover img {
+            transform: scale(1.1);
+        }
+        .work:hover .project {
+            height: 100%;
+        }
+        
+        .icon-container {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .work:hover .icon-container {
+            opacity: 1;
+        }
+        
+        .icon-container a {
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+        }
+        
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.2s ease-in-out;
+        }
+        .prev:hover, .next:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .prev { left: 15px; }
+        .next { right: 15px; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <div class="work">
+                <img src="c1.jpg" alt="Image 1">
+                <div class="project"><h3>Project 1</h3></div>
+                <div class="icon-container"><a href="#">🔗</a></div>
+            </div>
+            <div class="work">
+                <img src="c2.jpg" alt="Image 2">
+                <div class="project"><h3>Project 2</h3></div>
+                <div class="icon-container"><a href="#">🔗</a></div>
+            </div>
+            <div class="work">
+                <img src="c3.jpg" alt="Image 3">
+                <div class="project"><h3>Project 3</h3></div>
+                <div class="icon-container"><a href="#">🔗</a></div>
+            </div>
+            <div class="work">
+                <img src="c4.jpg" alt="Image 4">
+                <div class="project"><h3>Project 4</h3></div>
+                <div class="icon-container"><a href="#">🔗</a></div>
+            </div>
+            <div class="work">
+                <img src="c5.jpg" alt="Image 5">
+                <div class="project"><h3>Project 5</h3></div>
+                <div class="icon-container"><a href="#">🔗</a></div>
+            </div>
+            <div class="work">
+                <img src="c4.jpg" alt="Image 4">
+                <div class="project"><h3>Project 4</h3></div>
+                <div class="icon-container"><a href="#">🔗</a></div>
+            </div>
+                
+        </div>
+        <button class="prev" onclick="prevSlide()">&#10094;</button>
+        <button class="next" onclick="nextSlide()">&#10095;</button>
+    </div>
+    <script>
+        let slider = document.querySelector('.slider');
+        let index = 0;
+        function nextSlide() {
+            if (index < 2) {
+                index++;
+                slider.style.transform = `translateX(${-index * 270}px)`;
+            }
+        }
+        function prevSlide() {
+            if (index > 0) {
+                index--;
+                slider.style.transform = `translateX(${-index * 270}px)`;
+            }
+        }
+    </script>
+</body>
+</html>

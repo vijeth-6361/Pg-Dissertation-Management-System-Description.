@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/core@5.10.1/main.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/daygrid@5.10.1/main.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f4f7;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+        }
+        .sidebar {
+            background-color: #4caf50;
+            padding: 20px;
+            width: 26%;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+        .sidebar  i{
+            padding: 6px;
+        }
+        .sidebar h2 {
+            font-size: 24px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 20px 0;
+            position: relative;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+            padding-bottom: 5px;
+            display: inline-flex;
+            align-items: center;
+        }
+        .sidebar ul li a:hover {
+            color: #ffd700; /* Highlight color on hover */
+        }
+        .logout-button {
+            display: inline-block;
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .logout-button:hover {
+            background-color: darkred;
+        }
+        .main-content {
+            background-color: white;
+            padding: 20px;
+            width: 68%;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .stat {
+            background-color: #e8f5e9;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            flex: 1;
+            margin: 0 10px;
+            transition: box-shadow 0.3s ease;
+        }
+        .stat:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .stat h3 {
+            margin: 0;
+            font-size: 36px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        .tryout-button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .tryout-button:hover {
+            background-color: #45a049;
+        }
+        .calendar-section {
+            background-color: #fff;
+            padding: 20px;
+            width: 20%;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+        }
+        #calendar {
+            max-width: 100%;
+            margin: auto;
+        }
+        /* Meeting Scheduler Styles */
+        .meeting-scheduler {
+            text-align: center; /* Center text inside the container */
+            max-width: 25%;
+            border: 1px solid #ccc; /* Optional border for styling */
+            padding: 20px;
+            background-color: #c6cd83; /* White background for the container */
+            animation: fadeIn 0.5s; /* Fade in animation */
+          
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Meeting Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Space between form and table */
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .meet-logo {
+            width: 60px; /* Adjust logo size */
+        
+        }
+        .button {
+            background-color: #34A853; /* Google Meet color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; /* Animation */
+        }
+        .button:hover {
+            background-color: #2c8d3a; /* Darker green */
+            transform: scale(1.05); /* Slightly enlarge button on hover */
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <aside class="sidebar">
+            <section>
+                <h2>Dashboard</h2>
+                <ul>
+                    <li><a href="index2.html"><i class="fas fa-home"></i>Home</a></li>
+                    <li><a href="profile_creation.html"><i class="fas fa-person"></i>Profile</a></li>
+                    <li><a href="submit_project_idea.html"><i class="fas fa-file-upload"></i>Submit Project Idea</a></li>
+                    <li><a href="http://127.0.0.1:5000"><i class="fas fa-lightbulb"></i>Topic Recommendation</a></li>
+                    <li><a href="appointment.html"><i class="fas fa-user-friends"></i>Meeting with Guide</a></li>
+                    <li><a href="http://localhost:8000/document.php"><i class="fas fa-upload"></i>Upload Document</a></li>
+                </ul>
+                <a href="feedback.html" class="logout-button">Logout</a>
+            </section>
+        </aside>
+
+        <section class="main-content">
+            <article class="stats">
+                <section class="stat">
+                    <h3>1000</h3>
+                    <p>Total Students</p> 
+                </section>
+                <section class="stat">
+                    <h3>200</h3>
+                    <p>Total Guides</p>
+                </section>
+                <section class="stat">
+                    <h3>50</h3>
+                    <p>Total Publications</p>
+                </section>
+            </article>
+
+            <article class="buttons">
+                <button class="tryout-button">Try it out!</button>
+                <button class="tryout-button">Try it out!</button>
+            </article>
+
+            <article class="dissertation-progress">
+                <h2>Dissertation Progress</h2>
+                <div class="progress-container">
+                    <p>Proposal Submission: <span style="color: green;">Completed</span></p>
+                    <p>Data Collection: <span style="color: red;">Pending</span></p>
+                    <p>Final Submission: <span style="color: red;">Pending</span></p>
+                </div>
+            </article>
+
+            <article class="deadlines">
+                <h2>Upcoming Deadlines</h2>
+                <ul>
+                    <li>Proposal Review: <strong>April 30, 2025</strong></li>
+                    <li>Draft Submission: <strong>May 10, 2025</strong></li>
+                    <li>Final Submission: <strong>June 30, 2025</strong></li>
+                </ul>
+            </article>
+        </section>
+
+
+    </main>
+    
+    <div class="meeting-scheduler hidden">
+        <img src="google_meet_logo.png" alt="Google Meet Logo" class="meet-logo">
+        <h4>Book the meeting slot</h4>
+  
+
+        <input type="date" id="meetingDate" required>
+        <select id="meetingHour" required>
+            <option value="" disabled selected>Hour</option>
+            <script>
+                for (let i = 1; i <= 12; i++) {
+                    document.write(`<option value="${i}">${i}</option>`);
+                }
+            </script>
+        </select>
+        <select id="meetingMinute" required>
+            <option value="" disabled selected>Minute</option>
+            <script>
+                for (let i = 0; i < 60; i++) {
+                    document.write(`<option value="${i < 10 ? '0' + i : i}">${i < 10 ? '0' + i : i}</option>`);
+                }
+            </script>
+        </select>
+        <select id="meetingPeriod" required>
+            <option value="" disabled selected>AM/PM</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
+        <input type="text" id="meetingIdInput" placeholder="Enter Meeting ID" required><br><br>
+        <button class="button" onclick="bookMeeting()">Book the slot</button>
+
+        <table id="meetingTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Meeting entries will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://unpkg.com/@fullcalendar/core@5.10.1/main.min.js"></script>
+    <script src="https://unpkg.com/@fullcalendar/daygrid@5.10.1/main.min.js"></script>
+    <script>
+        // Toggle meeting scheduler visibility
+        function toggleScheduler() {
+            const scheduler = document.querySelector('.meeting-scheduler');
+            scheduler.classList.toggle('hidden');
+        }
+
+        // Calendar Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['dayGrid'],
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                },
+                events: [
+                    { title: 'Meeting with Guide', start: '2024-02-13' },
+                    { title: 'Project Review', start: '2024-02-20' }
+                ]
+            });
+            calendar.render();
+        });
+
+        // Meeting Scheduler Logic
+        let meetings = []; // Array to hold all meetings
+        let meetLinkBase = "https://meet.google.com/";
+
+        function bookMeeting() {
+            let date = document.getElementById("meetingDate").value;
+            let hour = document.getElementById("meetingHour").value;
+            let minute = document.getElementById("meetingMinute").value;
+            let period = document.getElementById("meetingPeriod").value;
+            let meetingId = document.getElementById("meetingIdInput").value; // Get meeting ID from input field
+
+            if (!date || !hour || !minute || !period || !meetingId) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Convert 12-hour format to 24-hour format for the Date object
+            hour = (period === "PM" && hour < 12) ? parseInt(hour) + 12 : hour; // Handle PM
+            hour = (period === "AM" && hour == 12) ? 0 : hour; // Handle 12 AM case
+
+            // Create a Date object
+            let meetingTime = new Date(`${date}T${hour}:${minute}`);
+
+            // Check if the selected date/time is in the future
+            let now = new Date();
+            if (meetingTime <= now) {
+                alert("Please select a future date and time.");
+                return;
+            }
+
+            const meetingLink = `${meetLinkBase}${meetingId}`;
+
+            // Store meeting details
+            meetings.push({
+                date: meetingTime.toDateString(),
+                time: meetingTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+                link: meetingLink
+            });
+
+            // Update meeting table
+            updateMeetingTable();
+
+            // Clear input fields
+            clearInputs();
+        }
+
+        function updateMeetingTable() {
+            let tableBody = document.getElementById("meetingTable").querySelector("tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            meetings.forEach(meeting => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${meeting.date}</td>
+                    <td>${meeting.time}</td>
+                    <td><a href="${meeting.link}" target="_blank">Join</a></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function clearInputs() {
+            document.getElementById("meetingDate").value = "";
+            document.getElementById("meetingHour").value = "";
+            document.getElementById("meetingMinute").value = "";
+            document.getElementById("meetingPeriod").value = "";
+            document.getElementById("meetingIdInput").value = ""; // Clear meeting ID input
+        }
+    </script>
+</body>
+</html>

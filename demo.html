@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PublicWelcome</title>
+  <style>
+    /* ... previous styles ... */
+    .appointment-modal {
+      /* ... previous styles ... */
+      display: flex; /* Changed to flex for better centering */
+      align-items: center; /* Changed to center items vertically */
+    }
+
+    .appointment-content {
+      /* ... previous styles ... */
+      max-width: 800px; /* Adjust as needed */
+    }
+
+    .calendar-container {
+      width: 100%; /*Ensures calendar takes up full width*/
+    }
+
+    .calendar-header {
+      background-color: #f0f0f0; /* Lighter background */
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ddd; /* Thinner border */
+    }
+
+    .calendar-body {
+      display: flex;
+      flex-direction: column; /* Align days vertically */
+      padding: 10px;
+    }
+
+    .calendar-day {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 5px 0;
+      height: 30px; /* Fixed height for better alignment */
+    }
+
+    .calendar-time {
+      display: inline-block;
+      width: 50px;
+      text-align: right;
+      margin-right: 10px;
+      color: #555; /* Darker time text color */
+    }
+
+    .calendar-slot {
+      flex: 1; /* Allows slots to expand to fill remaining space */
+      background-color: #f8f8f8; /* Slightly lighter background */
+      padding: 5px;
+      border: 1px solid #eee; /* Add subtle border for better separation */
+    }
+
+    .available {
+      background-color: #a2d298; /* Slightly darker green */
+    }
+
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 0 10px;
+    }
+
+    .calendar-nav button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+
+    .calendar-nav button:hover {
+      background-color: #eee;
+    }
+    .calendar-nav button.today {
+      background-color: #ddd;
+      padding: 5px 10px;
+      margin: 0 10px;
+      border-radius: 5px;
+      cursor: default;
+    }
+    .calendar-view-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .calendar-view-button {
+      padding: 5px 10px;
+      background-color: #f0f0f0;
+      margin-left: 5px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .calendar-view-button:hover {
+      background-color: #eee;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ... previous content ... -->
+    <div class="appointment-modal" id="appointmentModal">
+      <div class="appointment-content">
+        <div class="appointment-header">
+          <h2>Book an Appointment with Dr Sandeep Kumar - Associate Professor (Guide)</h2>
+          <button id="closeModal">X</button>
+        </div>
+        <div class="appointment-body">
+          <div class="calendar-nav">
+            <button>&lt;</button>
+            <button class="today">Today</button>
+            <button>&gt;</button>
+          </div>
+          <div class="calendar-container">
+            <div class="calendar-header">February 13, 2024 (Tuesday)</div>
+            <div class="calendar-body">
+              <div class="calendar-day">
+                <div class="calendar-time">8am</div>
+                <div class="calendar-slot available"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">9am</div>
+                <div class="calendar-slot available"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">10am</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">11am</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">12pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">1pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">2pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">3pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">4pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">5pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">6pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+              <div class="calendar-day">
+                <div class="calendar-time">7pm</div>
+                <div class="calendar-slot"></div>
+              </div>
+            </div>
+          </div>
+          <div class="calendar-view-buttons">
+            <button class="calendar-view-button">month</button>
+            <button class="calendar-view-button">week</button>
+            <button class="calendar-view-button">day</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ... rest of the content ... -->
+    <script>
+    document.getElementById('closeModal').addEventListener('click',function(){
+      document.getElementById('appointmentModal').style.display='none'
+    })
+      const guideItem = document.querySelector('.guide-item:first-child');
+      guideItem.addEventListener('click', () => {
+        document.getElementById('appointmentModal').style.display = 'flex';
+      });
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grad-Research Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background:#F4F8D3;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */ 
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 2rem;
+            width: 90px;
+                    }
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #102C57;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #EADCA6; /*Original style*/
+            color: #102C57;
+            transform: translateY(-1px);
+            
+        }
+        .floating-link {
+  position: fixed;
+  right: 120px;
+  background-color: #402cf0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #f2fdfd;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: colorChange 5s linear infinite;
+}
+
+.floating-link:hover {
+  background-color: #ddd;
+  color: #007bff;
+}
+
+
+        /* Main Content */
+        main {
+            padding-top: 80px;
+            padding-left: 0px;
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-content {
+            flex: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-content h1 {
+    font-size: 3rem;
+    background: #4B164C;
+    -webkit-background-clip: text; /* For webkit browsers (Chrome, Safari) */
+    -webkit-text-fill-color: transparent; /* Makes text transparent, revealing gradient */
+    background-clip: text; /* For other browsers */
+    margin-bottom: 1rem;
+    animation: slideIn 1s ease-out;
+}
+
+
+        .hero-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: #3B3030;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #8a56ac, #6a28ff);
+            box-shadow: 0 5px 15px rgba(12, 1, 39, 0.9);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(185, 166, 236, 0.9);
+        }
+
+        .hero-image{
+            
+            border-radius: 90px;
+
+            
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 90px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+           
+        }
+        /*-------scroll---*/
+        .main_slider{
+          padding: 6px;
+        }
+        .slider-container {
+            width: 99.5%;
+            overflow: hidden;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #150c0c, #1e3d44);
+            padding: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 5px;
+            width: max-content;
+        }
+        
+        .work {
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            width: 281.5px;
+            box-shadow: 0 0 20px 2px rgba(0,0,0,0.1);
+        }
+        
+        .work img {
+            width: 100%;
+            height: 310px;
+            display: block;
+            border-radius: 10px;
+            transition: transform 0.5s;
+        }
+        
+        .project {
+            width: 100%;
+            height: 0;
+            background: linear-gradient(rgba(138, 155, 252, 0.5), #00034d);
+            border-radius: 10px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: flex;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            font-size: 14px;
+            transition: height 0.5s;
+        }
+        .project p{
+          color:#ffea2c;
+          font-size: 20px;
+          font-weight: 800;
+        }
+       
+        .project h1 {
+  color: white;
+  animation: zoom 2s infinite; /* Adjust '2s' for speed */
+}
+
+@keyframes zoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+
+.project h1:hover {
+  transform: scale(1.1); /* Scale on hover */
+}
+s
+        .work:hover img {
+            transform: scale(1.1);
+        }
+        .work:hover .project {
+            height: 100%;
+        }
+        
+        .icon-container {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .work:hover .icon-container {
+            opacity: 1;
+        }
+        
+        .icon-container a {
+            text-decoration: none;
+            color: rgb(119, 255, 0);
+            font-size: 20px;
+        }
+        .icon-container:hover{
+          background-color: #fff9cb;
+        }
+        
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.2s ease-in-out;
+        }
+        .prev:hover, .next:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .prev { left: 15px; }
+        .next { right: 15px; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+
+         /* about us */
+
+        .info-section {
+        max-width: 1200px;  /* Reduced from 1200px */
+        margin: 2rem auto;
+        padding: 2rem;
+        background: linear-gradient(135deg, #150c0c, #1e3d44);
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(2, 16, 19, 0.2);
+        color: white;
+    }
+
+    .info-section h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .info-section h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 2px;
+    }
+
+    .info-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+        transition: transform 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .info-card i {
+        font-size: 5rem;
+        margin-bottom: 0.5rem;
+        color: white;
+    }
+
+    .info-card p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.2rem;
+        margin-top: 1.5rem;
+    }
+
+    .social-icons a {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+        background: white;
+        color: #2193b0;
+        transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .info-card {
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    .info-card:nth-child(1) { animation-delay: 0.1s; }
+    .info-card:nth-child(2) { animation-delay: 0.2s; }
+    .info-card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .info-section {
+            margin: 2rem 1rem;
+            padding: 2rem 1rem;
+        }
+
+        .info-section h3 {
+            font-size: 1.5rem;
+        }
+
+        .social-icons {
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+        }
+    }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+        }
+
+/*--contact us--*/
+.container {
+  display: flex;
+  gap:15px;
+  max-width: 1200px;  /* Reduced from 1200px */
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #150c0c, #1e3d44);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(2, 16, 19, 0.2);
+ 
+}
+
+.left-side, .right-side {
+  flex: 1;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.left-side h1{
+  color: #FEFAE0;
+}
+
+.contact-info {
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
+}
+
+.contact-info::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-image: linear-gradient(to right, #9fef8f, #fdf0f0); /*subtle gradient for visual effect*/
+  /*Optional animation*/
+  animation: drawLine 5s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+
+.contact-info h3 {
+  margin-top: 10px;
+  margin-left: 10px;
+  color: white;
+}
+.contact-info p{
+
+  color: white;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+  color: #FFFDF0;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  padding: 10px;
+  border: 1px solid #7f7b7b;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  background-color: #f4fafc;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  background-color: #d1d1d1;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+h1 {
+  animation: colorChange 5s infinite;
+}
+
+@keyframes colorChange {
+  0% { color: #007bff; }
+  50% { color: #28a745; }
+  100% { color: #007bff; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .left-side, .right-side {
+    margin-bottom: 20px;
+  }
+}
+
+a {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove default underline */
+}
+
+a:hover {
+  text-decoration: none; /* Underline on hover */
+}
+.contact-info {
+  display: flex; /* Enable Flexbox layout */
+  align-items: center; /* Vertically align items */
+}
+
+.contact-info > div { /* Targets the direct child div containing the image */
+  margin-left: 1px; /* Add spacing between the image and text */
+}
+
+
+.contact-info h3, .contact-info p{
+  flex:1; /*allows text to occupy remaining space */
+}
+div[name="img"] { /* Targets the div with name="img" */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  animation: zoomAnimation 2s ease-in-out infinite alternate;
+  border: 3px solid #007bff;
+  animation: colorChange 5s linear infinite;
+}
+
+div[name="img"] img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes zoomAnimation {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes colorChange {
+  0% { border-color: #007bff; }
+  25% { border-color: #28a745; }
+  50% { border-color: #dc3545; }
+  75% { border-color: #ffc107; }
+  100% { border-color: #007bff; }
+}
+
+
+/*---footer---*/
+.footer {
+  background: #10182F;
+}
+.footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 60px;
+}
+.footer-row .footer-col h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.footer-col .links {
+  margin-top: 20px;
+}
+.footer-col .links li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.footer-col .links li a {
+  text-decoration: none;
+  color: #bfbfbf;
+}
+.footer-col .links li a:hover {
+  color: #fff;
+}
+.footer-col p {
+  margin: 20px 0;
+  color: #bfbfbf;
+  max-width: 300px;
+}
+.footer-col form {
+  display: flex;
+  gap: 5px;
+}
+.footer-col input {
+  height: 40px;
+  border-radius: 6px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid #7489C6 ;
+  caret-color: #473939;
+  padding-left: 10px;
+}
+.footer-col input::placeholder {
+  color: #ccc;
+}
+ .footer-col form button {
+  background: #fff;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+.footer-col form button:hover {
+  background: #cecccc;
+}
+.footer-col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.footer-col .icons i {
+  color: #afb6c7;
+}
+.footer-col .icons i:hover  {
+  color: #0cd42d;
+}
+@media (max-width: 768px) {
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+  }
+  .footer .footer-row {
+    padding: 20px;
+    gap: 1rem;
+  }
+  .footer-col form {
+    display: block;
+  }
+  .footer-col form :where(input, button) {
+    width: 100%;
+  }
+  .footer-col form button {
+    margin: 10px 0 0 0;
+  }
+}
+/*chatbot */
+.circular-div {
+      width: 80px; /* Size of the circle */
+      height: 80px; /* Size of the circle */
+      border-radius: 50%; /* Make the element circular */
+      position: fixed; /* Stay fixed in a specific position */
+      top: 72px; /* Distance from the top */
+      right: 20px; /* Distance from the right */
+      z-index: 1000; /* Ensures it's on top of all elements */
+      background: linear-gradient(0deg, #2c2c54, #82e106, #706fd3); /* Darker gradient */
+      background-size: 200% 200%; /* Smooth animation for the gradient */
+      animation: rotate-gradient 3s linear infinite, border-rotate 10s linear infinite; /* Add both animations */
+      display: flex; /* Center-fill image within the circle */
+      justify-content: center; /* Center image horizontally */
+      align-items: center; /* Center image vertically */
+      overflow: hidden; /* Ensure the image stays within the circular border */
+    }
+
+    @keyframes rotate-gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes border-rotate {
+      0% {
+        transform: rotate(0deg); /* Initial rotation */
+      }
+      100% {
+        transform: rotate(360deg); /* Full circular rotation */
+      }
+    }
+
+    /* Rotating border effect */
+    .circular-div::before {
+      content: '';
+      position: absolute;
+      top: -5px; /* Expand beyond the element boundary */
+      left: -5px; /* Expand beyond the element boundary */
+      width: 160px; /* Slightly larger than the div for the border effect */
+      height: 160px; /* Slightly larger than the div for the border effect */
+      border-radius: 50%; /* Match the circular shape */
+      border: 5px solid transparent; /* Transparent border at the start */
+   
+      animation: border-rotate 2s linear infinite; /* Rotating border animation */
+    }
+
+    /* Image inside the circular div */
+    .circular-div img {
+      width: 100%; /* Keeps the image contained within the circle */
+      height: 100%; /* Keeps the image contained within the circle */
+      object-fit: cover; /* Ensures the aspect ratio is preserved */
+      border-radius: 50%; /* Makes the image circular within the div */
+      transition: transform 0.3s ease; /* Smooth hover zoom for image */
+      z-index: 10; /* Ensure the image is above the rotating border */
+    }
+
+    /* Hover effects for circular div */
+    .circular-div:hover {
+      transform: scale(1.2); /* Zooms in the whole div (with image & border) */
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Adds a stronger shadow */
+      background: linear-gradient(0deg, #0f0f3e, #1e1e5b, #4b4bbe); /* Darker gradient color change */
+    }
+
+    /* Hover effects for the image */
+    .circular-div:hover img {
+      transform: scale(1.1); /* Slight zoom of the image on hover */
+    }
+
+    /*--copyright--*/
+    .copyright {
+  text-align: center;
+  font-size: 20px;
+  background-color: #1e3d44;
+  bottom: 0;
+  width: 100%;
+  color: #ffffff;
+}
+@keyframes colorZoomAnimation {
+    0% { color: rgb(239, 20, 20);  }
+    25% { color: rgb(255, 180, 179);  }
+    50% { color: rgb(0, 228, 0);  }
+    75% { color: rgb(21, 39, 233);  }
+    100% { color: rgb(227, 255, 13);  }
+}
+
+.join {
+    text-decoration: none;
+    display:contents;
+    animation: colorZoomAnimation 2s infinite ease-in-out;
+} </style>
+</head>
+<body id="home">
+    <header>
+        <div class="navbar">
+            <img class="logo" src="logo.png">
+
+            <nav>
+                <ul>
+                 
+                  <li><a href="#join" class="join"><i class="fas fa-user-plus"></i> Join Course</a></li>
+                  <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                  <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                  <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                  <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                  <li><a href="feedback.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                  
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+      <a href="http://localhost:8000/" id="appointmentLink" class="floating-link">Faculty Appointment Scheduling</a>
+
+        
+  <div class="circular-div">
+    <a href="http://127.0.0.1:5000">
+
+    <img src="bot_logo.png" alt="Example Image">
+    </a>
+  </div>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>Empowering Your Academic Success</h1>
+                <p>A powerful platform that simplifies research, ensures ethical compliance, 
+                   and enhances collaboration. Streamline your postgraduate journey with us!</p>
+              <a href="more_about_us.html">  <button class="cta-button">Get More About Us</button></a>
+            </div>
+            <div class="hero-image">
+                <img src="student.jpg" alt="Research Illustration">
+                <h1 id="join"></h1>
+            </div>
+        </section>
+<!--scroll-->
+<section>
+<div class="main_slider">
+<div class="slider-container">
+  
+  <div class="slider">
+      <div class="work">
+          <img src="c1.jpg" alt="Image 1">
+          <div class="project"><p>Java Full Stack Course Registration<p> <h1>Register Now!!</h1></div>
+          <div class="icon-container"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeURLnaddKsdmNWrqXkUbiEwsSRZL53C37VDNaQ1uT8-q6DaA/viewform?usp=header">🔗</a></div>
+      </div>
+      <div class="work">
+          <img src="c2.jpg" alt="Image 2">
+          <div class="project"><p>DBMS Course Registration</p><h1>Register Now!!</h1></div>
+          <div class="icon-container"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdkyJj0If5fVeJ40II2fsdGv7BSDRRjR_Xk4goNTV4Icbfiqw/viewform?usp=header">🔗</a></div>
+      </div>
+      <div class="work">
+          <img src="c3.jpg" alt="Image 3">
+          <div class="project"><p>Web Development Full Stack Course Registration</p><h1>Register Now!!</h1></div>
+          <div class="icon-container"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfg98H0ByUCLDy2RHgyHrTW2RtKs-BOLTUsr1IqRMqeInSGLQ/viewform?usp=header">🔗</a></div>
+      </div>
+      <div class="work">
+          <img src="c4.jpg" alt="Image 4">
+          <div class="project"><p>Cyber Security Course Registration</p><h1>Register Now!!</h1></div>
+          <div class="icon-container"><a href="https://docs.google.com/forms/d/e/1FAIpQLSewGsS47hmhJ4O5nIxYhTedsbydS_JHuMpLf5Z70_QDq6_e-g/viewform?usp=header">🔗</a></div>
+      </div>
+      <div class="work">
+          <img src="c5.jpg" alt="Image 5">
+          <div class="project"><p>Ethical Hacking Course Registration</p><h1>Register Now!!</h1></div>
+          <div class="icon-container"><a href="https://docs.google.com/forms/d/e/1FAIpQLScpigxu-FvlDg1AD4vPzzAcLC8qoo6QJng1XyVzSASaSFhEPw/viewform?usp=header">🔗</a></div>
+      </div>
+      <div class="work">
+          <img src="c6.jpg" alt="Image 6">
+          <div class="project"><p>UI/UX Design Course Registration</p><h1>Register Now!!</h1></div>
+          <div class="icon-container"><a href="https://docs.google.com/forms/d/e/1FAIpQLSexq9j71kNB8w49HiBXYZ6FpOoi5bucKDAxPV9ZLvBBn7o_EA/viewform?usp=header">🔗</a></div>
+      </div>
+     
+   
+  </div>
+  <h1 id="about"></h1>
+  <button class="prev" onclick="prevSlide()">&#10094;</button>
+  <button class="next" onclick="nextSlide()">&#10095;</button>
+ 
+</div>
+</div>
+</section>
+<script>
+  let slider = document.querySelector('.slider');
+  let index = 0;
+  function nextSlide() {
+      if (index < 2) {
+          index++;
+          slider.style.transform = `translateX(${-index * 270}px)`;
+      }
+  }
+  function prevSlide() {
+      if (index > 0) {
+          index--;
+          slider.style.transform = `translateX(${-index * 270}px)`;
+      }
+  }
+</script>
+
+
+     <!-- Updated HTML structure -->
+<section class="info-section">
+    <h3>For Further Information</h3>
+    <div class="info-content">
+        <a href="access_to_research.html"><div class="info-card">
+            <i class="fas fa-book-reader"></i>
+            <p>Access to Research Resources</p>
+        </div></a>
+        <a href="collaborative_tools.html"><div class="info-card">
+            <i class="fas fa-users"></i>
+            <p>Collaboration Tools</p>
+        </div></a>
+        <a href="ethics_support.html"><div class="info-card">
+            <i class="fas fa-shield-alt"></i>
+            <p>Ethics Compliance Support</p>
+        </div></a>
+    </div>
+    <h1  id="contact"></h1>
+  </section>
+
+    <div class="container">
+      <div class="left-side">
+        <h1>Get in Touch</h1>
+        <form id="contactForm" name="submit-to-google-sheet">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <input type="submit" value="Send">
+        </form>
+      </div>
+      <div class="right-side">
+        
+        <div class="contact-info">
+            <div name="img">
+            <img src="person1.jpg" alt="Circular Image">
+          </div>
+          
+          <h3>Vijeth</h3>
+          <p>Email: <a href="mailto:vijethvijeth61@gmail.com ">vijethvijeth61@gmail.com 
+          </a><br>
+             Phone: +91 63616 56726
+             <br>
+             LinkedIn: <a href="www.linkedin.com/in/Vijeth-hugar" target="_blank">Vijeth</a></p> </div>
+        <div class="contact-info">
+            <div name="img">
+                <img src="person1.jpg" alt="Circular Image">
+              </div>
+          <h3>Pavan </h3>
+          <p>Email: <a href="mailto:pavanpavan22357@gmail.com">pavanpavan22357@gmail.com</a><br>
+             Phone: +91 88674 38968 <br>
+             LinkedIn: <a href="https://in.linkedin.com/in/bh-pavan-kumar-00a402321 " target="_blank">Pavan </a></p>
+            
+        </div>
+        <div class="contact-info">
+            <div name="img">
+                <img src="person1.jpg" alt="Circular Image">
+              </div>
+          <h3>Sumeeth</h3>
+          <p>Email: <a href="mailto:Sumeethsangat@gmail.com">Sumeethsangat@gmail.com </a><br>
+             Phone: +91 86605 23763  <br>
+             LinkedIn: <a href="www.linkedin.com/in/sumeeth-sangat-a94b92328\" target="_blank">Sumeeth</a></p>
+        </div>
+      </div>
+    </div>      
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+      // Add your form submission logic here (e.g., using fetch API to send data to a server)
+      alert('Form submitted!'); // Replace with actual submission handling
+    });
+    
+    </script>
+
+    <footer class="footer">
+    <div class="footer-row">
+      <div class="footer-col">
+        <h4>Info</h4>
+        <ul class="links">
+          <li><a href="#join">Join Course</a></li>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul class="links">
+          <li><a href="#">Customer Agreement</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">GDPR</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Media Kit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>PG(Post graduation)</h4>
+        <p>
+          Subscribe to our PG(Post graduation) for a weekly dose
+          of news, updates, helpful tips, and
+          exclusive offers.
+        </p>
+        <form action="#">
+          <input type="text" placeholder="Your email" required>
+          <button type="submit">SUBSCRIBE</button>
+        </form>
+        <div class="icons">
+          <i class="fa-brands fa-facebook-f"></i>
+          <i class="fa-brands fa-twitter"></i>
+          <i class="fa-brands fa-linkedin"></i>
+          <i class="fa-brands fa-github"></i>
+        </div>
+      </div>
+    </div>
+    
+</footer>
+<div class="copyright">
+  <p>Copyright © 2025 PG Dissertation Management System. All rights reserved.</p>
+  </div>
+</main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Button hover animation
+            const ctaButton = document.querySelector('.cta-button');
+            ctaButton.addEventListener('mouseenter', () => {
+                ctaButton.style.transform = 'translateY(-3px)';
+            });
+            ctaButton.addEventListener('mouseleave', () => {
+                ctaButton.style.transform = 'translateY(0)';
+            });
+
+
+            // Dropdown functionality
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                const dropbtn = dropdown.querySelector('.dropbtn');
+                const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+                dropbtn.addEventListener('click', () => {
+                    dropdownContent.classList.toggle('show');
+                });
+
+                // Close the dropdown if clicked outside of it
+                window.addEventListener('click', (event) => {
+                    if (!event.target.matches('.dropbtn')) {
+                        if (dropdownContent.classList.contains('show')) {
+                            dropdownContent.classList.remove('show');
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxszUCO_6SVgMF1_v5T6B_Nm3buKWfGlgcN6YyZq39LY5lQ7D34_5gLnsghLmFdudZT/exec'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+   
+</body>
+</html>

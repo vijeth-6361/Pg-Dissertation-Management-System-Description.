@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video Calling Platform MVP</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: #f5f8fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #2940d3;
+      color: #fff;
+      padding: 1em 2em;
+      text-align: center;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 80vh;
+    }
+    .container {
+      background: #fff;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+      padding: 2em;
+      border-radius: 12px;
+      margin: 2em;
+      min-width: 340px;
+      max-width: 420px;
+    }
+    .video-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 1.3em;
+    }
+    .videos {
+      display: flex;
+      flex-direction: row;
+      gap: 1.2em;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    video {
+      background: #000;
+      border-radius: 8px;
+      width: 200px;
+      height: 140px;
+      object-fit: cover;
+      border: 2px solid #2940d3;
+    }
+    .you {
+      font-size: 1em;
+      margin-top: .2em;
+      color: #2940d3;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      margin: 1em 0;
+    }
+    .controls button {
+      padding: 0.6em 1.5em;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      background: #becef7;
+      color: #2940d3;
+      transition: background 0.25s;
+    }
+    .controls button.end {
+      background: #eb4747;
+      color: #fff;
+    }
+    .controls button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .status, .error {
+      text-align: center;
+      margin: 1em 0 0;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .status {
+      color: #2940d3;
+    }
+    .error {
+      color: #e93d3d;
+    }
+    .auth-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    .auth-area input {
+      padding: 0.7em;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #becef7;
+    }
+    .auth-area button {
+      padding: 0.7em;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+      background: #2940d3;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    details summary {
+      font-size: .98em;
+      color: #2940d3;
+      cursor: pointer;
+      margin: .6em 0 .2em;
+    }
+    textarea {
+      width: 100%;
+      min-height: 3em;
+      padding: .6em;
+      font-size: .9em;
+      margin: .18em 0 .2em;
+      border-radius: 5px;
+      border: 1px solid #becef7;
+      background: #f7fafc;
+      resize: vertical;
+    }
+    @media (max-width: 700px) {
+      main {
+        min-height: unset;
+        align-items: stretch;
+      }
+      .container {
+        margin: .3em .5em;
+        padding: 1em .5em;
+        min-width: unset;
+        max-width: 100vw;
+      }
+      .videos {
+        flex-direction: column;
+        gap: 0.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  Video Calling Platform MVP
+</header>
+<main>
+  <div class="container" id="app-container">
+    <!-- Content injects here -->
+  </div>
+</main>
+<script>
+(function () {
+  // --- Simulate Auth State ---
+  let username = null;
+  let authStatus = false;
+  let localStream = null, remoteStream = null, peerConnection = null;
+  let isCallInitiator = false, isMuted = false, isVideoOff = false, callActive = false;
+
+  const app = document.getElementById('app-container');
+  const RTC_CONFIG = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+
+  // Helpers
+  function createElement(tag, props = {}, ...children) {
+    const el = document.createElement(tag);
+    for (let k in props) el[k] = props[k];
+    children.forEach(c => {
+      if (typeof c === 'string') el.appendChild(document.createTextNode(c));
+      else if (c instanceof Node) el.appendChild(c);
+    });
+    return el;
+  }
+
+  // ===================== AUTH ======================
+  function showAuth() {
+    app.innerHTML = '';
+    const title = createElement('h2', {}, 'Login');
+    const errorBox = createElement('div', { className: 'error', style: 'display:none' });
+    const input = createElement('input', { placeholder: 'Enter a username...' });
+    const btn = createElement('button', { innerText: 'Login' });
+    btn.onclick = function () {
+      if (!input.value.trim()) {
+        errorBox.innerText = 'Please enter a username';
+        errorBox.style.display = 'block';
+        return;
+      }
+      username = input.value.trim();
+      authStatus = true;
+      showDashboard();
+    };
+    const authArea = createElement('div', { className: 'auth-area' }, title, input, btn, errorBox);
+    app.appendChild(authArea);
+  }
+
+  // ===================== DASHBOARD ======================
+  function showDashboard() {
+    app.innerHTML = '';
+    const h = createElement('h2', {}, 'Welcome, ' + username + '!');
+    const videoBtn = createElement('button', { innerText: 'Start Video Call', style: 'margin-top:1em;' });
+    videoBtn.onclick = showVideoCallUI;
+    const logoutBtn = createElement('button', {
+      innerText: 'Logout',
+      style: 'margin-top:1.5em;background:#e93d3d;color:#fff;',
+      onclick: () => { username = null; authStatus = false; showAuth(); }
+    });
+    app.appendChild(h);
+    app.appendChild(createElement('div', { style: 'margin:.6em 0 1.7em 0;font-size:.96em;color:#4258aa' }, 
+      'For demo purposes, video calling is local and signaling is by manual copy-paste. '
+    ));
+    app.appendChild(videoBtn);
+    app.appendChild(logoutBtn);
+  }
+
+  // ===================== VIDEO CALL UI ======================
+  function showVideoCallUI() {
+    app.innerHTML = '';
+    // --- Video Elements ---
+    const videoArea = createElement('div', { className: 'video-area' });
+    const videoRow = createElement('div', { className: 'videos' });
+    const localVideo = createElement('video', { id: 'localVideo', autoplay: true, muted: true });
+    const remoteVideo = createElement('video', { id: 'remoteVideo', autoplay: true });
+    videoRow.appendChild(localVideo);
+    videoRow.appendChild(remoteVideo);
+    videoArea.appendChild(videoRow);
+
+    const labels = createElement('div', { style: 'display:flex;gap:7em;justify-content:center;width:100%' },
+      createElement('span', { className: 'you' }, 'You'),
+      createElement('span', { className: 'you', style: 'color:#4b4f5e' }, 'Remote')
+    );
+    videoArea.appendChild(labels);
+
+    // Call Controls
+    const controls = createElement('div', { className: 'controls' });
+    const btnMute = createElement('button', { innerText: 'Mute' });
+    const btnVideo = createElement('button', { innerText: 'Video Off' });
+    const btnEnd = createElement('button', { innerText: 'End Call', className: 'end' });
+    [btnMute, btnVideo, btnEnd].forEach(btn => controls.appendChild(btn));
+
+    // Status/Error
+    const statusBox = createElement('div', { className: 'status' }, 'Initializing video...');
+    const errorBox = createElement('div', { className: 'error', style: 'display:none' });
+
+    // --- Signaling Area for WebRTC manual exchange
+    const signalingSection = createElement('section', {}, 
+      createElement('h3', {}, 'Manual Signaling Exchange (for demo)'),
+      createElement('div', {}, 
+        '1. One user clicks "Create Offer", copies and sends the SDP to peer. ',
+        '2. The peer pastes it as "Remote Offer" & clicks "Answer", then sends the answer back.',
+        '3. First user pastes "Remote Answer".'
+      )
+    );
+    // a. Offer creation
+    const btnCreateOffer = createElement('button', { innerText: 'Create Offer' });
+    // b. Textareas/signals
+    const offerBox = createElement('textarea', { id: 'offerBox', placeholder: 'Your Offer will appear here...' });
+    const answerBox = createElement('textarea', { id: 'answerBox', placeholder: 'Your Answer will appear here...' });
+    const remoteOfferBox = createElement('textarea', { id: 'remoteOfferBox', placeholder: 'Paste Remote Offer here...' });
+    const remoteAnswerBox = createElement('textarea', { id: 'remoteAnswerBox', placeholder: 'Paste Remote Answer here...' });
+    const btnSetRemoteOffer = createElement('button', { innerText: 'Set Remote Offer & Answer' });
+    const btnAcceptAnswer = createElement('button', { innerText: 'Accept Remote Answer' });
+
+    // Layout: Offer Creater (caller) & Answerer (callee) flows
+    const initiatorDetails = createElement('details', {},
+      createElement('summary', {}, 'I want to start a call (Create Offer)'),
+      btnCreateOffer, 
+      offerBox,
+      createElement('div', {}, 'Paste the Answer here:'),
+      remoteAnswerBox,
+      btnAcceptAnswer
+    );
+    const answererDetails = createElement('details', {},
+      createElement('summary', {}, 'Received an offer? (Set Offer & Answer)'),
+      createElement('div', {}, 'Paste their Offer here:'),
+      remoteOfferBox,
+      btnSetRemoteOffer,
+      createElement('div', {}, 'Your generated Answer:'),
+      answerBox
+    );
+    signalingSection.appendChild(initiatorDetails);
+    signalingSection.appendChild(answererDetails);
+
+    // Mount UI
+    app.appendChild(videoArea);
+    app.appendChild(controls);
+    app.appendChild(statusBox);
+    app.appendChild(errorBox);
+    app.appendChild(signalingSection);
+
+    // --- Media Logic ---
+    statusBox.innerText = 'Requesting camera/mic permissions...';
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        localStream = stream;
+        localVideo.srcObject = stream;
+        statusBox.innerText = "Ready. You may start a call or wait for an offer.";
+        setupWebRTC_UI();
+      })
+      .catch(e => {
+        errorBox.innerText = "Failed to access camera/mic: " + e.message;
+        errorBox.style.display = 'block';
+        statusBox.innerText = '';
+      });
+
+    // --- Button Logic ---
+    btnMute.onclick = function () {
+      if (!localStream) return;
+      isMuted = !isMuted;
+      localStream.getAudioTracks().forEach(track => track.enabled = !isMuted);
+      btnMute.innerText = isMuted ? 'Unmute' : 'Mute';
+    };
+    btnVideo.onclick = function () {
+      if (!localStream) return;
+      isVideoOff = !isVideoOff;
+      localStream.getVideoTracks().forEach(track => track.enabled = !isVideoOff);
+      btnVideo.innerText = isVideoOff ? 'Video On' : 'Video Off';
+    };
+    btnEnd.onclick = function () {
+      cleanupCall();
+      showDashboard();
+    };
+
+    // ========== Manual Signaling Logic ==========
+    function logStatus(msg) { statusBox.innerText = msg; }
+    function logError(msg) { errorBox.innerText = msg; errorBox.style.display = 'block'; }
+    function clearError() { errorBox.innerText = ''; errorBox.style.display = 'none'; }
+
+    // --- Peer Connection Management ---
+    function setupWebRTC_UI() {
+      btnCreateOffer.onclick = async function () {
+        clearError();
+        isCallInitiator = true;
+        callActive = false;
+        try {
+          if (peerConnection) peerConnection.close();
+          peerConnection = createPeerConnection();
+          addLocalTracks(peerConnection, localStream);
+          logStatus('Creating offer...');
+          const offer = await peerConnection.createOffer();
+          await peerConnection.setLocalDescription(offer);
+          offerBox.value = JSON.stringify(offer);
+          logStatus('Send this Offer to your peer and get their Answer.');
+        } catch (err) {
+          logError(err.message);
+        }
+      };
+
+      btnAcceptAnswer.onclick = async function () {
+        clearError();
+        const sdpStr = remoteAnswerBox.value.trim();
+        if (!sdpStr) return logError('Paste remote answer SDP');
+        try {
+          const answer = JSON.parse(sdpStr);
+          if (!peerConnection) return logError('Peer connection not established');
+          await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+          callActive = true;
+          logStatus('Call started! You can speak now.');
+        } catch (err) { logError(err.message); }
+      };
+
+      btnSetRemoteOffer.onclick = async function () {
+        clearError();
+        isCallInitiator = false;
+        callActive = false;
+        const remoteOffer = remoteOfferBox.value.trim();
+        if (!remoteOffer) return logError('Paste offer from peer');
+        try {
+          if (peerConnection) peerConnection.close();
+          peerConnection = createPeerConnection();
+          addLocalTracks(peerConnection, localStream);
+          await peerConnection.setRemoteDescription(new RTCSessionDescription(JSON.parse(remoteOffer)));
+          const answer = await peerConnection.createAnswer();
+          await peerConnection.setLocalDescription(answer);
+          answerBox.value = JSON.stringify(answer);
+          logStatus('Paste this Answer to your peer. Waiting for connection...');
+        } catch (err) { logError(err.message); }
+      };
+    }
+
+    function createPeerConnection() {
+      const pc = new RTCPeerConnection(RTC_CONFIG);
+
+      // Ice events: show new SDP when ICE is stable
+      pc.onicecandidate = e => {
+        if (e.candidate === null) {
+          if (isCallInitiator) offerBox.value = JSON.stringify(pc.localDescription);
+          else answerBox.value = JSON.stringify(pc.localDescription);
+        }
+      };
+      // Remote stream
+      remoteStream = new MediaStream();
+      remoteVideo.srcObject = remoteStream;
+      pc.ontrack = e => {
+        remoteStream.addTrack(e.track);
+      };
+      pc.onconnectionstatechange = () => {
+        if (pc.connectionState === 'connected') {
+          callActive = true;
+          logStatus('Call connected!');
+        } else if (pc.connectionState === 'disconnected' || pc.connectionState === 'closed' || pc.connectionState === 'failed') {
+          callActive = false;
+          logStatus('Call ended. You may close this window.');
+          setTimeout(cleanupCall, 1200);
+        }
+      };
+      return pc;
+    }
+
+    function addLocalTracks(pc, stream) {
+      stream.getTracks().forEach(track => pc.addTrack(track, stream));
+    }
+
+    // --- Clean up ---
+    function cleanupCall() {
+      if (peerConnection) { peerConnection.close(); peerConnection = null; }
+      if (remoteStream) { remoteStream.getTracks().forEach(t => t.stop()); remoteStream = null; }
+      if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
+      callActive = false;
+    }
+  }
+
+  // Initial page
+  authStatus ? showDashboard() : showAuth();
+
+})();
+</script>
+</body>
+</html>

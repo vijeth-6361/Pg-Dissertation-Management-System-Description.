@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal Profile Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 30px;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .input-field:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        .step-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .step-button:hover {
+            background-color: #0056b3;
+        }
+        .step-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .progress-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 5px solid #ccc;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .progress-fill {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#007BFF 0% 0%, #ccc 0% 100%);
+            position: absolute;
+        }
+        .percentage {
+            z-index: 1;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .progress-circle.completed {
+            border-color: #007BFF;
+        }
+        .confirmation-message {
+            display: none;
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .acknowledgment {
+            display: none;
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        .acknowledgment h3 {
+            margin-bottom: 15px;
+        }
+        .acknowledgment .info {
+            margin-bottom: 10px;
+        }
+        .edit-button {
+            background-color: #ffc107;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .edit-button:hover {
+            background-color: #e0a800;
+        }
+        .edit-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Complete Your Job Profile</h1>
+    <p>Follow the steps to create a professional profile</p>
+</header>
+
+<div class="container">
+    <!-- Progress Circle -->
+    <div class="progress-container">
+        <div class="progress-circle" id="progress-circle">
+            <div class="progress-fill" id="progress-fill"></div>
+            <div class="percentage" id="progress-text">0%</div>
+        </div>
+    </div>
+
+    <!-- Step 1: Personal Information -->
+    <div id="step1" class="step active">
+        <h2>Step 1: Personal Information</h2>
+        <form id="step1-form">
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" class="input-field" placeholder="Enter your full name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" class="input-field" placeholder="Enter your phone number" range="10" required>
+        </form>
+        <button type="button" class="step-button" onclick="goToNextStep(1)">Next</button>
+    </div>
+
+    <!-- Step 2: Education -->
+    <div id="step2" class="step">
+        <h2>Step 2: Education</h2>
+        <form id="step2-form">
+            <label for="degree">Highest Degree</label>
+            <input type="text" id="degree" class="input-field" placeholder="Enter your highest degree" required>
+
+            <label for="institution">Institution Name</label>
+            <input type="text" id="institution" class="input-field" placeholder="Enter the name of your institution" required>
+
+            <label for="year">Year of Graduation</label>
+            <input type="number" id="year" class="input-field" placeholder="Enter your graduation year" required>
+        </form>
+        <button type="button" class="step-button" onclick="goToPreviousStep(2)">Previous</button>
+        <button type="button" class="step-button" onclick="goToNextStep(2)">Next</button>
+    </div>
+
+    <!-- Step 3: Work Experience -->
+    <div id="step3" class="step">
+        <h2>Step 3: Work Experience</h2>
+        <form id="step3-form">
+            <label for="experience">Previous Job Title</label>
+            <input type="text" id="experience" class="input-field" placeholder="Enter your previous job title" required>
+
+            <label for="company">Company Name</label>
+            <input type="text" id="company" class="input-field" placeholder="Enter the name of the company" required>
+
+            <label for="duration">Duration</label>
+            <input type="text" id="duration" class="input-field" placeholder="Enter the duration of your employment" required>
+        </form>
+        <button type="button" class="step-button" onclick="goToPreviousStep(3)">Previous</button>
+        <button type="button" class="step-button" onclick="goToNextStep(3)">Next</button>
+    </div>
+
+    <!-- Step 4: Skills -->
+    <div id="step4" class="step">
+        <h2>Step 4: Skills</h2>
+        <form id="step4-form">
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" class="input-field" placeholder="Enter your key skills (comma separated)" required>
+        </form>
+        <button type="button" class="step-button" onclick="goToPreviousStep(4)">Previous</button>
+        <button type="button" class="step-button" onclick="goToNextStep(4)">Next</button>
+    </div>
+
+    <!-- Step 5: Resume Upload -->
+    <div id="step5" class="step">
+        <h2>Step 5: Resume Upload</h2>
+        <form id="step5-form">
+            <label for="resume">Upload Resume</label>
+            <input type="file" id="resume" class="input-field" accept=".pdf, .doc, .docx" required>
+        </form>
+        <button type="button" class="step-button" onclick="goToPreviousStep(5)">Previous</button>
+        <button type="button" class="step-button" onclick="submitProfile()">Submit Profile</button>
+    </div>
+
+    <!-- Confirmation Message -->
+    <div class="confirmation-message" id="confirmation-message">
+        Your profile has been successfully submitted!
+    </div>
+
+    <!-- Acknowledgment Section -->
+    <div class="acknowledgment" id="acknowledgment-message">
+        <h3>Profile Submission Acknowledgment</h3>
+        <p><strong>Full Name:</strong> <span id="ack-full-name"></span></p>
+        <p><strong>Email:</strong> <span id="ack-email"></span></p>
+        <p><strong>Phone Number:</strong> <span id="ack-phone"></span></p>
+        <p><strong>Highest Degree:</strong> <span id="ack-degree"></span></p>
+        <p><strong>Institution:</strong> <span id="ack-institution"></span></p>
+        <p><strong>Year of Graduation:</strong> <span id="ack-year"></span></p>
+        <p><strong>Previous Job Title:</strong> <span id="ack-experience"></span></p>
+        <p><strong>Company:</strong> <span id="ack-company"></span></p>
+        <p><strong>Duration:</strong> <span id="ack-duration"></span></p>
+        <p><strong>Skills:</strong> <span id="ack-skills"></span></p>
+        <p><strong>Resume:</strong> Uploaded</p>
+
+        <!-- Edit Button with Icon -->
+        <button class="edit-button" onclick="editProfile()">
+            <span class="edit-icon">✏️</span>Edit Profile
+        </button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    let profileData = {
+        personalInfo: false,
+        education: false,
+        workExperience: false,
+        skills: false,
+        resume: false
+    };
+
+    // Function to navigate to the next step
+    function goToNextStep(step) {
+        if (document.getElementById('step' + step + '-form').checkValidity()) {
+            saveProgress(step);
+            document.getElementById('step' + currentStep).classList.remove('active');
+            currentStep = step + 1;
+            document.getElementById('step' + currentStep).classList.add('active');
+            updateProgress();
+        } else {
+            alert('Please fill in all required fields.');
+        }
+    }
+
+    // Function to navigate to the previous step
+    function goToPreviousStep(step) {
+        document.getElementById('step' + currentStep).classList.remove('active');
+        currentStep = step - 1;
+        document.getElementById('step' + currentStep).classList.add('active');
+        updateProgress();
+    }
+
+    // Function to save the profile data (simulated on step change)
+    function saveProgress(step) {
+        profileData[getStepName(step)] = true;
+        updateProgress();
+    }
+
+    // Function to update the profile completion progress
+    function updateProgress() {
+        const totalSteps = Object.keys(profileData).length;
+        const completedSteps = Object.values(profileData).filter(val => val === true).length;
+        const percentage = Math.round((completedSteps / totalSteps) * 100);
+        const progressText = document.getElementById('progress-text');
+        const progressFill = document.getElementById('progress-fill');
+        
+        progressText.innerText = percentage + '%';
+        progressFill.style.background = `conic-gradient(#007BFF ${percentage}% 0%, #ccc ${percentage}% 100%)`;
+
+        if (percentage === 80) {
+            // After the last step, if the percentage is 80, set it to 100% on submit
+            progressText.innerText = '100%';
+            progressFill.style.background = 'conic-gradient(#007BFF 100% 0%, #ccc 100% 100%)';
+        }
+    }
+
+    // Function to submit the profile
+    function submitProfile() {
+        // Save data
+        const fullName = document.getElementById('full-name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const degree = document.getElementById('degree').value;
+        const institution = document.getElementById('institution').value;
+        const year = document.getElementById('year').value;
+        const experience = document.getElementById('experience').value;
+        const company = document.getElementById('company').value;
+        const duration = document.getElementById('duration').value;
+        const skills = document.getElementById('skills').value;
+
+        // Display acknowledgment
+        document.getElementById('ack-full-name').innerText = fullName;
+        document.getElementById('ack-email').innerText = email;
+        document.getElementById('ack-phone').innerText = phone;
+        document.getElementById('ack-degree').innerText = degree;
+        document.getElementById('ack-institution').innerText = institution;
+        document.getElementById('ack-year').innerText = year;
+        document.getElementById('ack-experience').innerText = experience;
+        document.getElementById('ack-company').innerText = company;
+        document.getElementById('ack-duration').innerText = duration;
+        document.getElementById('ack-skills').innerText = skills;
+
+        document.getElementById('step5').classList.remove('active');
+        document.getElementById('acknowledgment-message').style.display = 'block';
+        document.getElementById('confirmation-message').style.display = 'block';
+    }
+
+    // Function to edit profile and return to the first step
+    function editProfile() {
+        // Hide acknowledgment and show the first step
+        document.getElementById('acknowledgment-message').style.display = 'none';
+        document.getElementById('step1').classList.add('active');
+        currentStep = 1;
+        document.getElementById('confirmation-message').style.display = 'none';
+
+        // Restore the form data
+        document.getElementById('full-name').value = document.getElementById('ack-full-name').innerText;
+        document.getElementById('email').value = document.getElementById('ack-email').innerText;
+        document.getElementById('phone').value = document.getElementById('ack-phone').innerText;
+        document.getElementById('degree').value = document.getElementById('ack-degree').innerText;
+        document.getElementById('institution').value = document.getElementById('ack-institution').innerText;
+        document.getElementById('year').value = document.getElementById('ack-year').innerText;
+        document.getElementById('experience').value = document.getElementById('ack-experience').innerText;
+        document.getElementById('company').value = document.getElementById('ack-company').innerText;
+        document.getElementById('duration').value = document.getElementById('ack-duration').innerText;
+        document.getElementById('skills').value = document.getElementById('ack-skills').innerText;
+    }
+
+    // Helper function to get the step name
+    function getStepName(step) {
+        const stepNames = ['personalInfo', 'education', 'workExperience', 'skills', 'resume'];
+        return stepNames[step - 1];
+    }
+</script>
+
+</body>
+</html>

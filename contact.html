@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+    body {
+  font-family: sans-serif;
+  display: flex;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  border-radius: 8px;
+  background-color:#333;
+  box-shadow: 0 2px 5px rgba(222, 14, 14, 0.1);
+  width: 100%;
+  max-width: 95%;
+  margin: 20px auto;
+  padding: 20px;
+  gap:15px;
+}
+
+.left-side, .right-side {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
+}
+
+.contact-info::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-image: linear-gradient(to right, #533434, #fdf0f0); /*subtle gradient for visual effect*/
+  /*Optional animation*/
+  animation: drawLine 5s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+
+.contact-info h3 {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+h1 {
+  animation: colorChange 5s infinite;
+}
+
+@keyframes colorChange {
+  0% { color: #007bff; }
+  50% { color: #28a745; }
+  100% { color: #007bff; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .left-side, .right-side {
+    margin-bottom: 20px;
+  }
+}
+
+a {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove default underline */
+}
+
+a:hover {
+  text-decoration: none; /* Underline on hover */
+}
+.contact-info {
+  display: flex; /* Enable Flexbox layout */
+  align-items: center; /* Vertically align items */
+}
+
+.contact-info > div { /* Targets the direct child div containing the image */
+  margin-left: 1px; /* Add spacing between the image and text */
+}
+
+
+.contact-info h3, .contact-info p{
+  flex:1; /*allows text to occupy remaining space */
+}
+div[name="img"] { /* Targets the div with name="img" */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  animation: zoomAnimation 2s ease-in-out infinite alternate;
+  border: 3px solid #007bff;
+  animation: colorChange 5s linear infinite;
+}
+
+div[name="img"] img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes zoomAnimation {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes colorChange {
+  0% { border-color: #007bff; }
+  25% { border-color: #28a745; }
+  50% { border-color: #dc3545; }
+  75% { border-color: #ffc107; }
+  100% { border-color: #007bff; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="left-side">
+    <h1>Get in Touch</h1>
+    <form id="contactForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+      <input type="submit" value="Send">
+    </form>
+  </div>
+  <div class="right-side">
+    
+    <div class="contact-info">
+        <div name="img">
+        <img src="person1.jpg" alt="Circular Image">
+      </div>
+      
+      <h3>John Doe</h3>
+      <p>Email: <a href="mailto:john.doe@example.com">john.doehhh@example.com</a><br>
+         Phone: +1 123-456-7890<br>
+         LinkedIn: <a href="https://www.linkedin.com/in/johndoe" target="_blank">John Doe</a></p> </div>
+    <div class="contact-info">
+        <div name="img">
+            <img src="person1.jpg" alt="Circular Image">
+          </div>
+      <h3>Jane Smith</h3>
+      <p>Email: <a href="mailto:jane.smith@example.com">jane.smith@example.com</a><br>
+         Phone: +1 987-654-3210<br>
+         LinkedIn: <a href="https://www.linkedin.com/in/janesmith" target="_blank">Jane Smith</a></p>
+        
+    </div>
+    <div class="contact-info">
+        <div name="img">
+            <img src="person1.jpg" alt="Circular Image">
+          </div>
+      <h3>Peter Jones</h3>
+      <p>Email: <a href="mailto:peter.jones@example.com">peter.jones@example.com</a><br>
+         Phone: +1 555-123-4567<br>
+         LinkedIn: <a href="https://www.linkedin.com/in/peterjones" target="_blank">Peter Jones</a></p>
+    </div>
+  </div>
+</div>      
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+  // Add your form submission logic here (e.g., using fetch API to send data to a server)
+  alert('Form submitted!'); // Replace with actual submission handling
+});
+
+</script>
+</body>
+</html>

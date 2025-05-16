@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Project Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f4f7;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            background-color: #4caf50;
+            padding: 20px;
+            width: 18.5%;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            color: white;
+            transition: background-color 0.3s ease;
+            /* Add transition for smooth color change */
+        }
+
+        .sidebar i {
+            padding: 6px;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+            padding-bottom: 5px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .sidebar ul li a:hover {
+            color: #ffd700;
+            /* Highlight color on hover */
+        }
+
+        .logout-button {
+            display: inline-block;
+            background-color: red;
+            color: white;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: darkred;
+        }
+
+        .project-form {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .project-form h2 {
+            margin-top: 0px;
+        }
+
+        .project-form label {
+            display: block;
+            transition: color 0.3s ease;
+            /* Add transition for label color change */
+        }
+
+        .project-form label:hover {
+            color: #4caf50;
+            /* Change label color on hover */
+        }
+
+        .project-form input[type="text"],
+        .project-form textarea,
+        .project-form select {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            transition: box-shadow 0.3s ease;
+            /* Add transition for box shadow */
+        }
+
+        .project-form input[type="text"]:focus,
+        .project-form textarea:focus,
+        .project-form select:focus {
+            box-shadow: 0 0 5px #4caf50;
+            /* Add box shadow on focus */
+            outline: none;
+            /* Remove default outline */
+        }
+
+        .project-form input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Add transition for button color change */
+        }
+
+        .project-form input[type="submit"]:hover {
+            background-color: #125c16;
+            /* Slightly darker green on hover */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <main class="container">
+        <aside class="sidebar">
+            <section>
+                <h2>Dashboard</h2>
+                <ul>
+                    <li><a href="index2.html"><i class="fas fa-home"></i>Home</a></li>
+                    <li><a href="profile_creation.html"><i class="fas fa-person"></i>Profile</a></li>
+                    <li><a href="submit_project_idea.html"><i class="fas fa-file-upload"></i>Submit Project Idea</a></li>
+                    <li><a href="http://127.0.0.1:5000"><i class="fas fa-lightbulb"></i>Topic Recommendation</a></li>
+                    <li><a href="appointment.html"><i class="fas fa-user-friends"></i>Meeting with Guide</a></li>
+                    <li><a href="http://localhost:8000/document.php"><i class="fas fa-upload"></i>Upload Document</a></li>
+                </ul>
+                <a href="feedback.html" class="logout-button">Logout</a>
+            </section>
+        </aside>
+
+        <section class="project-form">
+            <h2>Upload Project Details</h2>
+            <form id="projectUploadForm" name="submit-to-google-sheet">
+                <label for="projectTitle">Project Title:</label><br>
+                <input type="text" id="projectTitle" name="ProjectTitle" required><br><br>
+
+                <label for="projectDescription">Project Description:</label><br>
+                <textarea id="projectDescription" name="ProjectDescription" rows="2.5" required></textarea><br><br>
+
+                <label for="projectCategory">Project Type/Category:</label><br>
+                <select id="projectCategory" name="ProjectCategory" required>
+                    <option value="">Select Category</option>
+                    <option value="Research">Research</option>
+                    <option value="Development">Development</option>
+                    <option value="Design">Design</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Implementation">Implementation</option>
+                    <option value="Support">Support</option>
+                    <option value="Support">Other</option>
+                </select><br><br>
+
+                <label for="guideSelect">Select a Guide:</label><br>
+                <select id="guideSelect" name="GuideSelect" required>
+                    <option value="">Select Lecturer</option>
+                    <option value="guide1">Lecturer 1</option>
+                    <option value="guide2">Lecturer 2</option>
+                    <option value="guide1">Lecturer 3</option>
+                    <option value="guide2">Lecturer 4</option>
+                </select><br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzeH6SMzyPlZzFRv_f2KwWfi7N8-qQQsSWUJQA-XdPXZTcPh_mE9hhjhB3tSvkM3VLu/exec'
+        const form = document.forms['submit-to-google-sheet']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, {
+                method: 'POST',
+                body: new FormData(form)
+            })
+                .then(response => {
+                    console.log('Success!', response);
+                    // Clear the form inputs
+                    form.reset();
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+
+</html>

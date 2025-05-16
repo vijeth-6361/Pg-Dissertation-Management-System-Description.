@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Appointment Scheduling</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(to left, #aaf773, #89fcf4);
+        }
+        .left-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .image-box {
+            width: 100%;
+            height: 100%;
+            background: url('appointment.png') no-repeat center center/cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .login-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(to left, #aaf773, #89fcf4);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            width: 300px;
+        }
+        .login-form h2 {
+            text-align: center;
+        }
+        .login-form input {
+            width: 94%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background: #37191e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .right-section {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px;
+        }
+        .title {
+            font-size: 32px;
+            color: rgb(0, 10, 36);
+            margin-bottom: 30px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .title::before {
+            content: "\1F3EB"; /* School emoji */
+            font-size: 40px;
+            margin-right: 10px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .box {
+            width: 250px;
+            height: 80px;
+            background: white;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            padding: 20px;
+            position: relative;
+        }
+        .box::before {
+            font-size: 30px;
+            margin-right: 10px;
+        }
+        .box:nth-child(1)::before {
+            content: "\1F393"; /* Graduation Cap for Student */
+        }
+        .box:nth-child(2)::before {
+            content: "\1F3EB"; /* School for Faculty */
+        }
+        .box:nth-child(3)::before {
+            content: "\1F4BC"; /* Briefcase for Manager */
+        }
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #37191e, #ff7eb3);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-section">
+        <div class="image-box">
+            <div class="login-form" id="loginForm">
+                <h2 id="loginTitle">Login</h2>
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+                <button onclick="login()">Login</button>
+            </div>
+        </div>
+    </div>
+    <div class="right-section">
+        <div class="title">Faculty Appointment Scheduling</div>
+        <div class="container">
+            <div class="box" onclick="location.href='http://localhost:8000/index.php'">Student</div>
+            <div class="box" onclick="showLogin('faculty')">Faculty</div>
+            <div class="box" onclick="showLogin('manager')">Manager</div>
+        </div>
+    </div>
+
+    <script>
+        function showLogin(userType) {
+            const loginForm = document.getElementById("loginForm");
+            const loginTitle = document.getElementById("loginTitle");
+            loginTitle.innerHTML =userType.charAt(0).toUpperCase() + userType.slice(1) + " Login";
+            loginForm.style.display = "block";
+        }
+
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if ((username === "faculty" && password === "faculty@123") || 
+                (username === "manager" && password === "manager@123")) {
+                alert("Login successful!");
+                window.location.href = `http://localhost:8000/${username}.php`;
+            } else {
+                alert("Invalid credentials!");
+            }
+        }
+    </script>
+</body>
+</html>
